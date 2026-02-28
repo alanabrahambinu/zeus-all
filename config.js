@@ -1,13 +1,10 @@
 require("dotenv").config();
 
-/**
- * Validate required environment variables
- */
-const requiredEnv = [
-  "TOKEN",
-  "CLIENT_ID",
-  "MONGO_URI"
-];
+/* ==============================
+   Validate Required ENV Values
+============================== */
+
+const requiredEnv = ["TOKEN", "CLIENT_ID", "MONGO_URI"];
 
 requiredEnv.forEach((key) => {
   if (!process.env[key]) {
@@ -16,9 +13,10 @@ requiredEnv.forEach((key) => {
   }
 });
 
-/**
- * Export configuration
- */
+/* ==============================
+   Export Config
+============================== */
+
 module.exports = {
   token: process.env.TOKEN,
   clientId: process.env.CLIENT_ID,
