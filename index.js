@@ -4,17 +4,24 @@ const config = require("./config");
 const commandHandler = require("./handlers/commandHandler");
 const eventHandler = require("./handlers/eventHandler");
 
-/* START EXPRESS SERVER FOR RENDER */
+/* ==============================
+   START EXPRESS SERVER (RENDER)
+============================== */
 require("./dashboard/server");
 
 /* ==============================
    Prevent Silent Crashes
 ============================== */
-process.on("unhandledRejection", console.error);
-process.on("uncaughtException", console.error);
+process.on("unhandledRejection", (err) => {
+  console.error("❌ Unhandled Rejection:", err);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+});
 
 /* ==============================
-   Create Client
+   Create Discord Client
 ============================== */
 const client = new Client({
   intents: [
@@ -26,6 +33,13 @@ const client = new Client({
 });
 
 client.commands = new Collection();
+
+/* ==============================
+   READY EVENT (IMPORTANT)
+============================== */
+client.once("ready", () => {
+  console.log(`🔥 Logged in as ${client.user.tag}`);
+});
 
 /* ==============================
    MongoDB Connection
@@ -47,7 +61,7 @@ eventHandler(client);
    Login Bot
 ============================== */
 client.login(config.token)
-  .then(() => console.log("🤖 Bot Online"))
+  .then(() => console.log("🤖 Login request sent to Discord"))
   .catch((err) => {
     console.error("❌ Login Error:", err);
     process.exit(1);
