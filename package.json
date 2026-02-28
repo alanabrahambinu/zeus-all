@@ -1,0 +1,12 @@
+
+{
+  "name": "advanced-security-expansion",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "mongoose": "^8.0.0",
+    "dotenv": "^16.3.1"
+  }
+}
