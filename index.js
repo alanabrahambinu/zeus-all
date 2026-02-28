@@ -4,17 +4,18 @@ const config = require("./config");
 const commandHandler = require("./handlers/commandHandler");
 const eventHandler = require("./handlers/eventHandler");
 
+/* START EXPRESS SERVER FOR RENDER */
+require("./dashboard/server");
+
 /* ==============================
    Prevent Silent Crashes
 ============================== */
-
 process.on("unhandledRejection", console.error);
 process.on("uncaughtException", console.error);
 
 /* ==============================
    Create Client
 ============================== */
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -29,7 +30,6 @@ client.commands = new Collection();
 /* ==============================
    MongoDB Connection
 ============================== */
-
 mongoose.connect(config.mongoURI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => {
@@ -40,14 +40,12 @@ mongoose.connect(config.mongoURI)
 /* ==============================
    Load Handlers
 ============================== */
-
 commandHandler(client);
 eventHandler(client);
 
 /* ==============================
    Login Bot
 ============================== */
-
 client.login(config.token)
   .then(() => console.log("🤖 Bot Online"))
   .catch((err) => {
