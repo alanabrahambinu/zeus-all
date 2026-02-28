@@ -1,17 +1,27 @@
-
 const fs = require("fs");
 const path = require("path");
-module.exports = (client)=>{
-  function load(dir){
+
+module.exports = (client) => {
+  const commandsPath = path.join(__dirname, "..", "commands");
+
+  function loadCommands(dir) {
     const files = fs.readdirSync(dir);
-    for(const file of files){
-      const full = path.join(dir,file);
-      if(fs.lstatSync(full).isDirectory()) load(full);
-      else if(file.endsWith(".js")){
-        const cmd = require(full);
-        if(cmd.data) client.commands.set(cmd.data.name, cmd);
+
+    for (const file of files) {
+      const fullPath = path.join(dir, file);
+
+      if (fs.lstatSync(fullPath).isDirectory()) {
+        loadCommands(fullPath);
+      } else if (file.endsWith(".js")) {
+        const command = require(fullPath);
+
+        if (command.data && command.execute) {
+          client.commands.set(command.data.name, command);
+          console.log(`✅ Loaded command: ${command.data.name}`);
+        }
       }
     }
   }
-  load("./commands");
+
+  loadCommands(commandsPath);
 };
