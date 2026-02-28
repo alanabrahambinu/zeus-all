@@ -1,5 +1,12 @@
+const express = require("express");
+const config = require("../config");
 
-const express=require("express");
-const app=express();
-app.get("/",(req,res)=>res.send("Dashboard Running"));
-app.listen(process.env.PORT||3000,()=>console.log("Dashboard started"));
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Bot is running!");
+});
+
+app.listen(config.port, () => {
+  console.log(`🌐 Dashboard running on port ${config.port}`);
+});
