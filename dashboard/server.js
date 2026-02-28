@@ -1,13 +1,12 @@
-const express = require("express");
-
+const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 10000;  // Use Render's PORT variable
 
-app.get("/", (req, res) => {
-  res.send("Bot is running 🚀");
+app.get('/', (req, res) => {
+  res.send('Bot is running 🚀');
 });
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, "0.0.0.0", () => {
+// Important: Bind to 0.0.0.0 (not localhost)
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌐 Server running on port ${PORT}`);
 });
