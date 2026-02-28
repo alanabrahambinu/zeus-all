@@ -1,12 +1,15 @@
 const express = require("express");
-const config = require("../config");
 
 const app = express();
 
+// Health check route
 app.get("/", (req, res) => {
-  res.send("Bot is running!");
+  res.send("Bot is running 🚀");
 });
 
-app.listen(config.port, () => {
-  console.log(`🌐 Dashboard running on port ${config.port}`);
+// IMPORTANT: Use Render's PORT
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🌐 Server running on port ${PORT}`);
 });
