@@ -3,11 +3,11 @@ const fs = require("fs");
 const path = require("path");
 const config = require("./config");
 
-/* ==============================
-   Load All Commands
-============================== */
-
 const commands = [];
+
+/* ==============================
+   Read All Commands
+============================== */
 
 function read(dir) {
   const files = fs.readdirSync(dir);
@@ -19,9 +19,7 @@ function read(dir) {
       read(full);
     } else if (file.endsWith(".js")) {
       const cmd = require(full);
-      if (cmd.data) {
-        commands.push(cmd.data.toJSON());
-      }
+      if (cmd.data) commands.push(cmd.data.toJSON());
     }
   }
 }
@@ -29,7 +27,7 @@ function read(dir) {
 read(path.join(__dirname, "commands"));
 
 /* ==============================
-   Deploy Commands
+   Deploy Slash Commands
 ============================== */
 
 const rest = new REST({ version: "10" }).setToken(config.token);
@@ -44,7 +42,7 @@ const rest = new REST({ version: "10" }).setToken(config.token);
     );
 
     console.log(`✅ Successfully deployed ${commands.length} commands.`);
-  } catch (error) {
-    console.error("❌ Slash Deploy Error:", error);
+  } catch (err) {
+    console.error("❌ Deploy Error:", err);
   }
 })();
